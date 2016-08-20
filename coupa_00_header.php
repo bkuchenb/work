@@ -29,22 +29,26 @@ echo'
 		</div>
 	</div>
 	<div class="container_02">
-		<nav class="navbar"">
-			<form id="form_navbar" method="POST" action="coupa_01_login.php">';
+		<nav class="navbar"">';
 if($user_type == 'guest'){
 	echo'
-				<input id="btn_login" name="login" type="submit" value="Log in" />';
+			<form id="form_navbar" method="POST" action="coupa_01_login.php">
+				<input id="btn_login" name="login" type="submit" value="Log in" />
+			</form>';
 }
 else{
 	if($user_type == 'admin'){
 		echo'
-				<input id="btn_admin" name="admin" type="submit" value="Admin" />';
+			<form id="form_navbar" method="POST" action="coupa_03_admin.php" style="display:inline-block;">
+				<input id="btn_admin" name="admin" type="submit" value="Admin" />
+			</form>';
 	}
 	echo'
-				<input id="btn_logout" name="logout" type="submit" value="Log out" />';
+			<form id="form_navbar" method="POST" action="coupa_01_login.php" style="display:inline-block;">
+				<input id="btn_logout" name="logout" type="submit" value="Log out" />
+			</form>';
 }
 echo'
-			</form>
 		</nav>
 	</div>
 </header>';

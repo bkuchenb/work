@@ -1,0 +1,66 @@
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+html{
+	background-color: #e6eeff;/*Create a light blue background.*/
+}
+.container_01{
+	position: relative;/*Stack on top of each other for smaller screens.*/
+    text-align: center;/*Center all divs placed inside this container.*/
+    width: 100%;/*Fill the entire width of the screen.*/
+}
+/*Placed in container 1.*/
+.header_center{
+	padding: 20px 0px;
+}
+/*Placed in header_center.*/
+.logo{
+	background-color: #e6eeff;
+	background-image: url(../images/logo_st_peters.png);
+	background-repeat: no-repeat;
+	border-style: none;
+	cursor: pointer;
+	height: 77px;
+	width: 374px;
+}
+.container_02{
+	background-color: #99bbff;/*Create a blue background darker than container 1 and 3.*/
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+	position: relative;/*Stack on top of each other for smaller screens.*/
+	text-align: center;/*Center all divs placed inside this container.*/
+    width: 100%;/*Fill the entire screen.*/
+}
+/*Placed in container 2.*/
+.navbar{
+	margin: auto;
+	min-height: 40px;/*Get no smaller than this.*/
+	padding: 10px 0px;
+	text-align: left;
+	width: 374px;/*Get no smaller than the logo.*/
+}
+.container_03{
+	position: relative;/*Stack on top of each other for smaller screens.*/
+    text-align: center;/*Center all divs placed inside this container.*/
+    width: 100%;/*Fill the entire screen.*/
+}
+/*Placed in container 3.*/
+.body_center{
+	padding: 10px 0px;
+	text-align: center;/*Center all elements placed inside this div.*/
+}
+table{
+	margin: auto;
+	text-align: left;
+}
+th{
+	background-color: #ccddff;/*Create a blue background lighter than the navbar.*/
+}
+td{
+	background-color: white;
+}
+#login{
+	margin-left: 10px;
+}

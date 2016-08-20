@@ -33,15 +33,15 @@ echo'
 			<form id="form_navbar" method="POST" action="coupa_01_login.php">';
 if($user_type == 'guest'){
 	echo'
-				<button id="btn_login" name="login" type="submit">Log in</button>';
+				<input id="btn_login" name="login" type="submit" value="Log in" />';
 }
 else{
 	if($user_type == 'admin'){
 		echo'
-				<button id="btn_admin" name="admin" type="submit">Admin</button>';
+				<input id="btn_admin" name="admin" type="submit" value="Admin" />';
 	}
 	echo'
-				<button id="btn_logout" name="logout" type="submit">Log out</button>';
+				<input id="btn_logout" name="logout" type="submit" value="Log out" />';
 }
 echo'
 			</form>

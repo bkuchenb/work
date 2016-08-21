@@ -5,6 +5,7 @@ include('coupa_00_header.php');
 	<div class="container_03">
 		<div class="body_center">
 			<form id="form_coupa" method="POST" action="javascript:void(0);">
+				<input class="submit_admin" type="submit" value="Update" />
 				<table id="order_table" border="1">
 					<thead>
 						<tr>

@@ -98,7 +98,7 @@ a{
 	color: black;
 	text-decoration: none;
 }
-.submit_admin{
+.submit_admin, .submit_coupa{
 	position: fixed;
 	top: 139px;
 }

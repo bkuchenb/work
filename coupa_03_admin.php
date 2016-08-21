@@ -17,13 +17,23 @@ else{
 	$order = 'ASC';
 }
 //Check to see if changes have been submitted.
-if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])){
-	
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['inv_array'])){
+	//Cycle through the POST data to see what has been changed.
+	for($j = 0; $j < count($_POST['inv_array']); $j++){
+		//Compare each line with the SESSION array.
+			if(isset($_POST['inv_array'][$j]['check'])){
+				if($_POST['inv_array'][$j]['check'] == 1){
+					
+				}
+					
+			}
+	}
 }
 //Display the items in the database.
 $q = 'SELECT *
 	  FROM inventory
-	  ORDER BY '. $mainSort .' '. $order;
+	  ORDER BY '. $mainSort .' '. $order .'
+	  LIMIT 100';
 //Change the order for the next sort.
 if($order == 'ASC'){
 	$order = 'DESC';
@@ -55,10 +65,11 @@ echo'
 <body>
 	<div class="container_03">
 		<div class="body_center">
-			<form id="form_coupa" method="POST" action="coupa_03_admin.php">
+			<form id="form_admin" method="POST" action="coupa_03_admin.php">
 				<table id="order_table" border="1">
 					<thead>
 						<tr>
+							<th><input class="submit_admin" type="submit" value="Submit" /></th>
 							<th><a href="/coupa_03_admin.php?mainSort=MedId&order='. $order .'">MedId</a></th>
 							<th><a href="/coupa_03_admin.php?mainSort=MedDescription&order='. $order .'">MedDescription</a></th>
 							<th><a href="/coupa_03_admin.php?mainSort=LawsonNumber&order='. $order .'">LawsonNumber</a></th>
@@ -74,6 +85,7 @@ echo'
 for($i = 0; $i < count($inv_array); $i++){
 	echo'
 						<tr>
+							<td><input name="inv_array['. $i .'][check]" class="check" type="checkbox" value="1" /></td>
 							<td><input name="inv_array['. $i .'][MedId]" class="items"
 								type="text" value="'. $inv_array[$i]['MedId'] .'" /></td>
 							<td><input name="inv_array['. $i .'][MedDescription]" class="desc"

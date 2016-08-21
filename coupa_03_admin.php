@@ -2,9 +2,15 @@
 include('coupa_00_header.php');
 //Connect to the coupa database.
 require('coupa_mysqli_connect.php');
+//Check to see if changes have been submitted.
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])){
+	
+}
+
 //Display the items in the database.
 $q = 'SELECT *
-	  FROM inventory';
+	  FROM inventory
+	  ORDER BY MedDescription ASC';
 //Run the query.
 $r = mysqli_query($dbc, $q);
 //If it runs okay, display the records.

@@ -19,10 +19,10 @@ include('coupa_00_header.php');
 					<tbody id="table_body">
 						<tr>
 							<td><input id="1" class="items" type="text" /></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td class="lawnum_order"></td>
+							<td class="desc_order"></td>
+							<td class="source_order"></td>
+							<td class="sqty_order"></td>
 							<td><input class="qty" type="text" /></td>
 						</tr>
 					</tbody>

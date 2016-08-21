@@ -54,13 +54,16 @@ html{
 table{
 	margin: auto;
 	text-align: left;
-	width: 80%;
 }
 th{
 	background-color: #ccddff;/*Create a blue background lighter than the navbar.*/
 }
 td{
 	background-color: white;
+}
+.items, .qty, .source, .sqty, .uom, .lawnum, .desc{
+	background-color: none;
+	border: none;
 }
 .items, .qty{
 	width: 75px;
@@ -72,11 +75,12 @@ td{
 	width: 100px;
 }
 .uom, .lawnum{
-	width: 125px;
+	width: 110px;
 }
 .desc{
 	width: auto;
 }
 #login{
 	margin-left: 10px;
+	width: 75px;
 }

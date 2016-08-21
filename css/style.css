@@ -78,9 +78,13 @@ td{
 	width: 110px;
 }
 .desc{
-	width: auto;
+	width: 300px;
 }
 #login{
 	margin-left: 10px;
 	width: 75px;
+}
+a{
+	color: black;
+	text-decoration: none;
 }

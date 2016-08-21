@@ -2,15 +2,35 @@
 include('coupa_00_header.php');
 //Connect to the coupa database.
 require('coupa_mysqli_connect.php');
+
+//Create variables used for sorting the table.
+$mainSort = '';
+$order = '';
+if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['mainSort'])){
+	//Set the variable depending on which heading was clicked
+	$mainSort = $_GET['mainSort'];
+	$order = $_GET['order'];
+}
+else{
+	//Default sort.
+	$mainSort = 'MedDescription';
+	$order = 'ASC';
+}
 //Check to see if changes have been submitted.
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])){
 	
 }
-
 //Display the items in the database.
 $q = 'SELECT *
 	  FROM inventory
-	  ORDER BY MedDescription ASC';
+	  ORDER BY '. $mainSort .' '. $order;
+//Change the order for the next sort.
+if($order == 'ASC'){
+	$order = 'DESC';
+}
+else{
+	$order = 'ASC';
+}
 //Run the query.
 $r = mysqli_query($dbc, $q);
 //If it runs okay, display the records.
@@ -39,12 +59,12 @@ echo'
 				<table id="order_table" border="1">
 					<thead>
 						<tr>
-							<th>MedId</th>
-							<th>MedDescription</th>
-							<th>LawsonNumber</th>
-							<th>LawsonDescription</th>
+							<th><a href="/coupa_03_admin.php?mainSort=MedId&order='. $order .'">MedId</a></th>
+							<th><a href="/coupa_03_admin.php?mainSort=MedDescription&order='. $order .'">MedDescription</a></th>
+							<th><a href="/coupa_03_admin.php?mainSort=LawsonNumber&order='. $order .'">LawsonNumber</a></th>
+							<th><a href="/coupa_03_admin.php?mainSort=LawsonDescription&order='. $order .'">LawsonDescription</a></th>
 							<th>UOM</th>
-							<th>Source</th>
+							<th><a href="/coupa_03_admin.php?mainSort=Source&order='. $order .'">Source</a></th>
 							<th>SuggestedQty</th>
 							<th>OrderQty</th>
 						</tr>

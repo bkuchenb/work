@@ -71,7 +71,7 @@ th{
 td{
 	background-color: white;
 }
-.items, .qty, .source, .sqty, .uom, .lawnum, .desc{
+.items, .qty, .source, .sqty, .uom, .lawnum, .desc, .btn_delete{
 	background-color: none;
 	border: none;
 }

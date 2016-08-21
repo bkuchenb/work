@@ -5,7 +5,7 @@ include('coupa_00_header.php');
 	<div class="container_03">
 		<div class="body_center">
 			<form id="form_coupa" method="POST" action="javascript:void(0);">
-				<input class="submit_admin" type="submit" value="Update" />
+				<input class="submit_coupa" id="submit_coupa" type="submit" value="Submit" />
 				<table id="order_table" border="1">
 					<thead>
 						<tr>
@@ -25,6 +25,7 @@ include('coupa_00_header.php');
 							<td class="source_order"></td>
 							<td class="sqty_order"></td>
 							<td><input class="qty" type="text" /></td>
+							<td><button class="btn_delete" id="btn_0">Delete</button></td>
 						</tr>
 					</tbody>
 				</table>

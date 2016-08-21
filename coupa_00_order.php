@@ -9,11 +9,11 @@ include('coupa_00_header.php');
 					<thead>
 						<tr>
 							<th>Barcode</th>
-							<th>Lawson Number</th>
+							<th>LawsonNumber</th>
 							<th>Description</th>
 							<th>Source</th>
-							<th>Suggested Qty</th>
-							<th>Order Qty</th>
+							<th>SuggestedQty</th>
+							<th>OrderQty</th>
 						</tr>
 					</thead>
 					<tbody id="table_body">

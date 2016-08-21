@@ -20,13 +20,25 @@ else{
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['inv_array'])){
 	//Cycle through the POST data to see what has been changed.
 	for($j = 0; $j < count($_POST['inv_array']); $j++){
-		//Compare each line with the SESSION array.
-			if(isset($_POST['inv_array'][$j]['check'])){
-				if($_POST['inv_array'][$j]['check'] == 1){
-					
-				}
-					
+		//Get all the cells that have been changed in the current row.
+		$update_array = array_diff_assoc($_POST['inv_array'][$j], $_SESSION['inv_array'][$j]);
+		//Update the database if there are changes.
+		if(count($update_array) > 0){
+			//Create an update statement.
+			$q = 'UPDATE inventory SET ';
+			//Add the sanitized values to the statement..
+			foreach($update_array as $key => $value){
+				$q = $q . $key . '="' . sanitize_string($value) . '",';
 			}
+			//Complete the statement.
+			$q = rtrim($q, ',') . ' WHERE MedId="' . sanitize_string($_POST['inv_array'][$j]['MedId']) . '"';
+			//Run the query.
+			$r = mysqli_query($dbc, $q);
+			if(!$r){
+				echo mysqli_error($dbc) . '<br>Query: ' . $q . '<br>';
+				echo '<br>There was a problem finding what you requested.<br>';
+			}
+		}
 	}
 }
 //Display the items in the database.
@@ -66,10 +78,10 @@ echo'
 	<div class="container_03">
 		<div class="body_center">
 			<form id="form_admin" method="POST" action="coupa_03_admin.php">
+				<input class="submit_admin" type="submit" value="Submit" />
 				<table id="order_table" border="1">
 					<thead>
 						<tr>
-							<th><input class="submit_admin" type="submit" value="Submit" /></th>
 							<th><a href="/coupa_03_admin.php?mainSort=MedId&order='. $order .'">MedId</a></th>
 							<th><a href="/coupa_03_admin.php?mainSort=MedDescription&order='. $order .'">MedDescription</a></th>
 							<th><a href="/coupa_03_admin.php?mainSort=LawsonNumber&order='. $order .'">LawsonNumber</a></th>
@@ -84,8 +96,7 @@ echo'
 //Print the results
 for($i = 0; $i < count($inv_array); $i++){
 	echo'
-						<tr>
-							<td><input name="inv_array['. $i .'][check]" class="check" type="checkbox" value="1" /></td>
+						<tr class="hover">
 							<td><input name="inv_array['. $i .'][MedId]" class="items"
 								type="text" value="'. $inv_array[$i]['MedId'] .'" /></td>
 							<td><input name="inv_array['. $i .'][MedDescription]" class="desc"

@@ -47,7 +47,14 @@ html{
     width: 100%;/*Fill the entire screen.*/
 }
 /*Placed in container 3.*/
+.body_header{
+	padding: 10px 0px;
+	text-align: center;/*Center all elements placed inside this div.*/
+}
+/*Placed in container 3.*/
 .body_center{
+	height: 450px;
+	overflow: scroll;
 	padding: 10px 0px;
 	text-align: center;/*Center all elements placed inside this div.*/
 }
@@ -55,29 +62,32 @@ table{
 	margin: auto;
 	text-align: left;
 }
+tr.hover:hover input{
+	background-color: #ccddff;
+}
 th{
 	background-color: #ccddff;/*Create a blue background lighter than the navbar.*/
 }
 td{
 	background-color: white;
 }
-.items, .qty, .source, .sqty, .uom, .lawnum, .desc, .submit_admin{
+.items, .qty, .source, .sqty, .uom, .lawnum, .desc{
 	background-color: none;
 	border: none;
 }
 .items, .qty{
 	width: 75px;
 }
-.source{
+.source, .source_order{
 	width: 50px;
 }
-.sqty{
+.sqty, .sqty_order{
 	width: 100px;
 }
-.uom, .lawnum{
+.uom, .lawnum, .lawnum_order{
 	width: 110px;
 }
-.desc{
+.desc, .desc_order{
 	width: 300px;
 }
 #login{
@@ -87,4 +97,8 @@ td{
 a{
 	color: black;
 	text-decoration: none;
+}
+.submit_admin{
+	position: fixed;
+	top: 139px;
 }

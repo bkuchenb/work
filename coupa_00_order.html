@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>Coupa Order Form</title>
+	<meta charset="utf-8" />
+	<link type="text/css" href="css/style.css" rel="stylesheet" media="screen" />
+	<link type="text/css" href="css/style_print.css" rel="stylesheet" media="print" />
+</head>
+<header>
+	<div class="container_01">
+		<div class="header_center">
+			<img class="logo" src="images/logo_st_peters.png" />
+		</div>
+	</div>
+	<div class="container_02">
+		<nav class="navbar">
+		</nav>
+	</div>
+</header>
+<body>
+	<div class="container_03">
+		<div class="body_center">
+			<table id="order_table" border="1">
+				<thead>
+					<tr>
+						<th class="barcode">Barcode</th>
+						<th>LawsonNumber</th>
+						<th>Description</th>
+						<th>Source</th>
+						<th>SuggestedQty</th>
+						<th>OrderQty</th>
+					</tr>
+				</thead>
+				<tbody id="table_body">
+					<tr>
+						<td class="barcode"><input id="1" class="items" type="text" /></td>
+						<td class="lawnum_order"></td>
+						<td class="desc_order"></td>
+						<td class="source_order"></td>
+						<td class="sqty_order"></td>
+						<td><input class="qty" type="text" /></td>
+						<td class="delete"><button class="btn_delete" id="btn_0">Delete</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+<script type="text/javascript" src="coupa_02_scripts.js"></script>
+</body>
+</html>

@@ -18,10 +18,6 @@ html{
 /*Placed in header_center.*/
 .logo{
 	background-color: #e6eeff;
-	background-image: url(../images/logo_st_peters.png);
-	background-repeat: no-repeat;
-	border-style: none;
-	cursor: pointer;
 	height: 77px;
 	width: 374px;
 }
@@ -48,14 +44,14 @@ html{
 }
 /*Placed in container 3.*/
 .body_header{
-	padding: 10px 0px;
+	padding: 10px 0;
 	text-align: center;/*Center all elements placed inside this div.*/
 }
 /*Placed in container 3.*/
 .body_center{
 	height: 450px;
 	overflow: scroll;
-	padding: 10px 0px;
+	padding: 10px 0;
 	text-align: center;/*Center all elements placed inside this div.*/
 }
 table{
@@ -65,17 +61,24 @@ table{
 tr.hover:hover input{
 	background-color: #ccddff;
 }
+td{
+  background-color: white;
+  border-color: black;
+}
+.delete{
+  border: none;
+  opacity: 1;
+}
 th{
 	background-color: #ccddff;/*Create a blue background lighter than the navbar.*/
 }
-td{
-	background-color: white;
-}
-.items, .qty, .source, .sqty, .uom, .lawnum, .desc, .btn_delete{
-	background-color: none;
-	border: none;
+.barcode, .source_order, .sqty_order,
+.uom, .lawnum_order, .desc_order{
+	border-color: black;
 }
 .items, .qty{
+	background-color: transparent;
+	border: none;
 	width: 75px;
 }
 .source, .source_order{

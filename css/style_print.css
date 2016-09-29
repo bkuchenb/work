@@ -1,3 +1,33 @@
 .container_01, .container_02{
 	visibility: hidden;
 }
+.empty_row, .barcode, .delete{
+	display: none;
+}
+
+.items, .qty, .source, .sqty, .uom, .lawnum, .desc, .btn_delete{
+	background-color: none;
+	border: none;
+}
+.items, .qty{
+	width: 75px;
+}
+.source, .source_order{
+	width: 50px;
+}
+.sqty, .sqty_order{
+	width: 100px;
+}
+.uom, .lawnum, .lawnum_order{
+	width: 110px;
+}
+.desc, .desc_order{
+	width: 300px;
+}
+}
+th{
+	border: none;
+}
+tr:nth-child(even) {
+    border: none;
+}

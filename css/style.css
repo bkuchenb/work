@@ -34,7 +34,7 @@ html{
 	margin: auto;
 	min-height: 40px;/*Get no smaller than this.*/
 	padding: 10px 0px;
-	text-align: left;
+	text-align: center;
 	width: 374px;/*Get no smaller than the logo.*/
 }
 .container_03{
@@ -85,6 +85,7 @@ th{
 	width: 50px;
 }
 .sqty, .sqty_order{
+	display: none;
 	width: 100px;
 }
 .uom, .lawnum, .lawnum_order{
@@ -104,4 +105,8 @@ a{
 .submit_admin, .submit_coupa{
 	position: fixed;
 	top: 139px;
+}
+.location{
+	display: none;
+	width:  110px;
 }

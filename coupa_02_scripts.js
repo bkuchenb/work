@@ -13,6 +13,54 @@ item.focus();
 create_listener(item);
 //Create an action listener for the first button.
 create_listener_delete(document.getElementById('btn_0'));
+//Create an action listener for the print button.
+create_listener_print(document.getElementById('btn_print'));
+
+function create_listener_print(btn_print){
+	//Add an event listener to the print button.
+	btn_print.addEventListener('click', function(event){
+		//Get all the items that need to be printed.
+		var  barcode_list = document.getElementsByClassName('barcode');
+		var  lawnum_order_list = document.getElementsByClassName('lawnum_order');
+		var  desc_order = document.getElementsByClassName('desc_order');
+		var  source_order_list = document.getElementsByClassName('source_order');
+		var  sqty_order_list = document.getElementsByClassName('sqty_order');
+		var  qty_list = document.getElementsByClassName('qty');
+		var  location_list = document.getElementsByClassName('location');
+		//Create a csv list of all the data.
+		var csv = [];
+		for(var i = 0; i < lawnum_order_list.length - 1; i++){
+			csv.push(location_list[i + 1].innerHTML + ',' + lawnum_order_list[i].innerHTML
+			+ ',' + desc_order[i].innerHTML	+ ',' + source_order_list[i].innerHTML
+			+ ',' + sqty_order_list[i].innerHTML + ',' + qty_list[i].value)
+		}
+		console.log(csv);
+		//Reorder the items in the csv list.
+		var sorted_locations = sortAlphaNum(csv);
+		//Cycle through the sorted list.
+		for(var j = 0; j < sorted_locations.length; j++){
+			//Split the array.
+			var row_array = sorted_locations[j].split(',');
+			//Update each field in the order form.
+			if(row_array[0].slice(0, 1) == '0'){
+				location_list[j + 1].innerHTML = row_array[0].slice(1);
+			}
+			else{
+				location_list[j + 1].innerHTML = row_array[0];
+			}
+			lawnum_order_list[j].innerHTML = row_array[1];
+			desc_order[j].innerHTML = row_array[2];
+			source_order_list[j].innerHTML = row_array[3];
+			sqty_order_list[j].innerHTML = row_array[4];
+			qty_list[j].value = row_array[5];
+			//Replace the barcode valu with line #.
+			barcode_list[j + 1].innerHTML = j + 1;
+		}
+		//Update the barcode column heading.
+		barcode_list[0].innerHTML = 'Line';
+		window.print();
+	}, false);
+}
 
 function create_listener_delete(btn_delete){
 	//When clicked, remove the element.
@@ -48,7 +96,7 @@ function check_rows(num, qty){
 	//Get all the td elements.
 	cells = document.getElementsByTagName('td');
 	//Cycle through the elments to see if there is a match.
-	for(i = 1; i < cells.length; i += 7){
+	for(i = 1; i < cells.length; i += 8){
 		//If there is a match, update the original and remove the data.
 		if(cells[i].innerHTML == num && num != 'N/A'){
 			found_match = true;
@@ -93,6 +141,9 @@ function create_row(item){
 	var cell_6 = document.createElement('td');
 	//Set the class name for the delete button cell.
 	cell_6.className = 'delete';
+	var cell_7 = document.createElement('td');
+	//Set the class name for the location cell.
+	cell_7.className = 'location';
 	//Create an input for the next barcode.
 	var next_item = document.createElement('input');
 	//Set the id number, className and type.
@@ -124,6 +175,7 @@ function create_row(item){
 	row.appendChild(cell_4);
 	row.appendChild(cell_5);
 	row.appendChild(cell_6);
+	row.appendChild(cell_7);
 	//Add the row to the tbody.
 	tbody.appendChild(row);
 	//Move the cursor to the new empty line.
@@ -154,38 +206,58 @@ function get_data(item){
 		"OrderQty": "N/A"}
 	}
 	//Get all the td elements.
-	cells = document.getElementsByTagName('TD');
+	cells = document.getElementsByTagName('td');
 	//Check to see if this is a duplicate value.
 	check_rows(entry.LawsonNumber, entry.OrderQty);
 	if(!found_match){
 		create_row(item);
 		//Get the last tr element.
-		rows = document.getElementsByTagName('TR');
+		rows = document.getElementsByTagName('tr');
 		//Set the row id to the LawsonNumber.
 		rows[rows.length - 2].id = entry.LawsonNumber;
 		//Change the className of the row.
 		rows[rows.length - 2].className = 'row';
 		//If the row number is even set the backgroundColor to grey.
 		if((rows.length - 2) % 2 === 0){
-			for(j = 9; j <= 14; j++){
+			for(j = 11; j <= 16; j++){
 				cells[cells.length - j].style.backgroundColor = '#D3D3D3';
 			}
 		}
 		//If the Source is W/S set the backgroundColor to red.
 		if(entry.Source == 'W/S' || entry.Source == 'N/A'){
-			for(j = 9; j <= 13; j++){
+			for(j = 11; j <= 16; j++){
 				cells[cells.length - j].style.backgroundColor = 'Red';
 			}
 		}
 		//Add the data to the cells.
-		cells[cells.length - 13].innerHTML = entry.LawsonNumber;
-		cells[cells.length - 12].innerHTML = entry.LawsonDescription;
-		cells[cells.length - 11].innerHTML = entry.Source;
-		cells[cells.length - 10].innerHTML = '';
+		cells[cells.length - 15].innerHTML = entry.LawsonNumber;
+		cells[cells.length - 14].innerHTML = entry.LawsonDescription;
+		cells[cells.length - 13].innerHTML = entry.Source;
+		cells[cells.length - 12].innerHTML = '';
+		cells[cells.length - 9].innerHTML = entry.Location;
 		//Get all the qty inputs.
 		quantities = document.getElementsByClassName('qty');
 		quantities[quantities.length - 2].value = entry.OrderQty;
 	}
+}
+
+function sortAlphaNum(list){
+	//Create an aray to temporarily store list entries.
+	var temp = [];
+	//Cycle through the list.
+	for(var x = 0; x < list.length; x++){
+		//Get the first two characters.
+		var chars = list[x].slice(0, 2);
+		//If they are numbers add the entry.
+		if(parseInt(chars) > 9){
+			temp.push(list[x]);
+		}
+		//If not, add a leading zero. 
+		else{
+			temp.push('0' + list[x]);
+		}
+	}
+	return temp.sort();
 }
 
 function load_formulary(){
@@ -459,7 +531,7 @@ function load_formulary(){
 		{"MedId": "23950", "LawsonNumber": "261022", "LawsonDescription": "IBUPROFEN TAB 400MG UD", "UOM": "750 TABS/BO", "Source": "INV", "OrderQty": 750, "Location": "7D1B"},
 		{"MedId": "25825", "LawsonNumber": "261023", "LawsonDescription": "IBUPROFEN TAB 600MG UD", "UOM": "750 TABS/BO", "Source": "INV", "OrderQty": 750, "Location": "7D1C"},
 		{"MedId": "56331", "LawsonNumber": "260650", "LawsonDescription": "IBUPROFEN TAB 800MG UD", "UOM": "750 TABS/BO", "Source": "INV", "OrderQty": 750, "Location": "7D1D"},
-		{"MedId": "5339", "LawsonNumber": "104110", "LawsonDescription": "INDOMETHACIN CAP 25MG", "UOM": "100 CAPS/BO", "Source": "W/S", "OrderQty": None, "Location": "N/A"},
+		{"MedId": "5339", "LawsonNumber": "104110", "LawsonDescription": "INDOMETHACIN CAP 25MG", "UOM": "100 CAPS/BO", "Source": "W/S", "OrderQty": 1, "Location": "N/A"},
 		{"MedId": "98736", "LawsonNumber": "211289", "LawsonDescription": "INDOMETHACIN SUPP 50MG", "UOM": "30 SUPPS/BX", "Source": "INV", "OrderQty": 30, "Location": "10A7C"},
 		{"MedId": "82795", "LawsonNumber": "263950", "LawsonDescription": "INFLUENZA TRI VAC 0.5ML", "UOM": "10 SYRINGES/CT", "Source": "INV", "OrderQty": 10, "Location": "11A2A"},
 		{"MedId": "55585", "LawsonNumber": "200253", "LawsonDescription": "INSULIN NOVOLOG", "UOM": "10 VIALS/CT", "Source": "INV", "OrderQty": 10, "Location": "10A7D"},
@@ -535,7 +607,7 @@ function load_formulary(){
 		{"MedId": "43489", "LawsonNumber": "105871", "LawsonDescription": "MAG OXIDE TAB 400MG", "UOM": "120 TABS/BO", "Source": "INV", "OrderQty": 120, "Location": "2D6K"},
 		{"MedId": "53804", "LawsonNumber": "201178", "LawsonDescription": "MAG HYDROX PLUS 30ML", "UOM": "10 CUPS/SLEEVE", "Source": "INV", "OrderQty": 10, "Location": "7F4A"},
 		{"MedId": "49714", "LawsonNumber": "100688", "LawsonDescription": "DRUG MANNITOL VL 25 50ML", "UOM": "25 VIALS/CT", "Source": "INV", "OrderQty": 25, "Location": "4F2B"},
-		{"MedId": "2012", "LawsonNumber": "216573", "LawsonDescription": "SOL MANNITOL 20% IV 500ML", "UOM": "None", "Source": "W/S", "OrderQty": None, "Location": "N/A"},
+		{"MedId": "2012", "LawsonNumber": "216573", "LawsonDescription": "SOL MANNITOL 20% IV 500ML", "UOM": "None", "Source": "W/S", "OrderQty": 1, "Location": "N/A"},
 		{"MedId": "40328", "LawsonNumber": "105280", "LawsonDescription": "MMR II VL (MEAS/MUMP/RUB", "UOM": "10 VIALS/CT", "Source": "INV", "OrderQty": 10, "Location": "10C2A"},
 		{"MedId": "37540", "LawsonNumber": "105522", "LawsonDescription": "MECLIZINE TAB 12.5MG", "UOM": "100 TABS/BO", "Source": "INV", "OrderQty": 100, "Location": "2E1A"},
 		{"MedId": "33524", "LawsonNumber": "105582", "LawsonDescription": "DEPO PROVERA VL 150MG/1ML", "UOM": "1 VIAL", "Source": "W/S", "OrderQty": 1, "Location": "N/A"},
@@ -711,8 +783,8 @@ function load_formulary(){
 		{"MedId": "99034", "LawsonNumber": "105527", "LawsonDescription": "SOTALOL TAB 80MG", "UOM": "100 TABS/BO", "Source": "INV", "OrderQty": 100, "Location": "3A6D"},
 		{"MedId": "60450", "LawsonNumber": "100314", "LawsonDescription": "DRUG SUCCINYLCHO FTV200MG/10ML", "UOM": "25 VIALS/CT", "Source": "INV", "OrderQty": 25, "Location": "11F1A"},
 		{"MedId": "8418", "LawsonNumber": "239688", "LawsonDescription": "SUCRALFATE TAB 1GM", "UOM": "500 TABS/BO", "Source": "INV", "OrderQty": 500, "Location": "3A6H"},
-		{"MedId": "82151", "LawsonNumber": "200894", "LawsonDescription": "SOL SUCROSE NAT SWEET-EASE", "UOM": "None", "Source": "W/S", "OrderQty": None, "Location": "N/A"},
-		{"MedId": "99378", "LawsonNumber": "200894", "LawsonDescription": "SOL SUCROSE NAT SWEET-EASE", "UOM": "None", "Source": "W/S", "OrderQty": None, "Location": "N/A"},
+		{"MedId": "82151", "LawsonNumber": "200894", "LawsonDescription": "SOL SUCROSE NAT SWEET-EASE", "UOM": "None", "Source": "W/S", "OrderQty": 1, "Location": "N/A"},
+		{"MedId": "99378", "LawsonNumber": "200894", "LawsonDescription": "SOL SUCROSE NAT SWEET-EASE", "UOM": "None", "Source": "W/S", "OrderQty": 1, "Location": "N/A"},
 		{"MedId": "82770", "LawsonNumber": "265053", "LawsonDescription": "SUGAMMADEX VL 200MG/2ML", "UOM": "10 VIALS/CT", "Source": "INV", "OrderQty": 10, "Location": "5E3B"},
 		{"MedId": "23917", "LawsonNumber": "106973", "LawsonDescription": "SULFAM/TRI TAB DS", "UOM": "100 TABS/BO", "Source": "INV", "OrderQty": 100, "Location": "3A6I"},
 		{"MedId": "98902", "LawsonNumber": "103923", "LawsonDescription": "SULFAM/TRI LIQ 16OZ.", "UOM": "1 BOTTLE", "Source": "INV", "OrderQty": 1, "Location": "6C4B"},
@@ -731,7 +803,7 @@ function load_formulary(){
 		{"MedId": "21128", "LawsonNumber": "105372", "LawsonDescription": "THROMBIN KIT 20 UNIT", "UOM": "10 KITS", "Source": "INV", "OrderQty": 10, "Location": "9B5A"},
 		{"MedId": "744", "LawsonNumber": "105375", "LawsonDescription": "THROMBIN TOPICAL 5000U", "UOM": "1 KIT", "Source": "INV", "OrderQty": 1, "Location": "1F5G"},
 		{"MedId": "82390", "LawsonNumber": "241233", "LawsonDescription": "TICAGRELOR TAB 90MG", "UOM": "100 TABS/BO", "Source": "INV", "OrderQty": 100, "Location": "3B2B"},
-		{"MedId": "245010", "LawsonNumber": "245010", "LawsonDescription": "TIPRANAVIR CAP 250MG", "UOM": "120 CAPS/BO", "Source": "W/S", "OrderQty": None, "Location": "N/A"},
+		{"MedId": "245010", "LawsonNumber": "245010", "LawsonDescription": "TIPRANAVIR CAP 250MG", "UOM": "120 CAPS/BO", "Source": "W/S", "OrderQty": 1, "Location": "N/A"},
 		{"MedId": "43038", "LawsonNumber": "103324", "LawsonDescription": "TIZANIDINE TAB 4MG", "UOM": "150 TABS/BO", "Source": "INV", "OrderQty": 150, "Location": "3B2C"},
 		{"MedId": "99331", "LawsonNumber": "100663", "LawsonDescription": "TOBRAMYCIN VL 80MG 2ML", "UOM": "25 VIALS/CT", "Source": "INV", "OrderQty": 25, "Location": "5E4F"},
 		{"MedId": "1995", "LawsonNumber": "250372", "LawsonDescription": "TOBRAMYCIN INJECT POW 1.2GM", "UOM": "6 VIALS/CT", "Source": "INV", "OrderQty": 6, "Location": "5E4E"},
@@ -741,7 +813,7 @@ function load_formulary(){
 		{"MedId": "745", "LawsonNumber": "229414", "LawsonDescription": "TRAZODONE TAB 50MG", "UOM": "500 TABS/BO", "Source": "INV", "OrderQty": 500, "Location": "3B2I"},
 		{"MedId": "31200", "LawsonNumber": "102194", "LawsonDescription": "TRIAMCIN ACET VL 40MG 5ML", "UOM": "1 VIAL", "Source": "INV", "OrderQty": 1, "Location": "5E5B"},
 		{"MedId": "48346", "LawsonNumber": "103416", "LawsonDescription": "TRIFLURIDINE OPH 1% 7.5ML", "UOM": "1 BOTTLE", "Source": "W/S", "OrderQty": 1, "Location": "N/A"},
-		{"MedId": "4407", "LawsonNumber": "105376", "LawsonDescription": "TRIMETHOBENZ VL 200MG", "UOM": "25 VL/CT", "Source": "W/S", "OrderQty": None, "Location": "N/A"},
+		{"MedId": "4407", "LawsonNumber": "105376", "LawsonDescription": "TRIMETHOBENZ VL 200MG", "UOM": "25 VL/CT", "Source": "W/S", "OrderQty": 1, "Location": "N/A"},
 		{"MedId": "98949", "LawsonNumber": "106484", "LawsonDescription": "URSODIOL CAP 300MG", "UOM": "100 CAPS/BO", "Source": "INV", "OrderQty": 100, "Location": "3B3A"},
 		{"MedId": "42802", "LawsonNumber": "105453", "LawsonDescription": "VALSARTAN CAP 160MG", "UOM": "90 CAPS/BO", "Source": "INV", "OrderQty": 90, "Location": "3B3F"},
 		{"MedId": "42797", "LawsonNumber": "105452", "LawsonDescription": "VALSARTAN CAP 80MG", "UOM": "90 CAPS/BO", "Source": "INV", "OrderQty": 90, "Location": "3B3E"},
@@ -771,7 +843,7 @@ function load_formulary(){
 		{"MedId": "16286", "LawsonNumber": "102241", "LawsonDescription": "DRUG WARFARIN TAB 7.5MG", "UOM": "100 TABS/BO", "Source": "INV", "OrderQty": 100, "Location": "3B6B"},
 		{"MedId": "44978", "LawsonNumber": "100656", "LawsonDescription": "WATER INJ STER 20ML SD", "UOM": "25 VIALS/CT", "Source": "INV", "OrderQty": 25, "Location": "5F5A"},
 		{"MedId": "12385", "LawsonNumber": "101643", "LawsonDescription": "WITCH HAZEL PADS", "UOM": "20 EA/BX", "Source": "INV", "OrderQty": 20, "Location": "9C3A"},
-		{"MedId": "98842", "LawsonNumber": "106974", "LawsonDescription": "ZINC SULFATE CAP 220MG", "UOM": "100 CAPS/BO", "Source": "INV", "OrderQty": 100, "Location": "3B6D"},
-		];
+		{"MedId": "98842", "LawsonNumber": "106974", "LawsonDescription": "ZINC SULFATE CAP 220MG", "UOM": "100 CAPS/BO", "Source": "INV", "OrderQty": 100, "Location": "3B6D"}
+	];
 	return formulary;
 }

@@ -14,6 +14,7 @@
 	</div>
 	<div class="container_02">
 		<nav class="navbar">
+			<button id="btn_print">Print Pick List</button>			
 		</nav>
 	</div>
 </header>
@@ -27,8 +28,9 @@
 						<th>LawsonNumber</th>
 						<th>Description</th>
 						<th>Source</th>
-						<th>SuggestedQty</th>
+						<th class="sqty">SuggestedQty</th>
 						<th>OrderQty</th>
+						<th class="location">Location</th>
 					</tr>
 				</thead>
 				<tbody id="table_body">
@@ -40,6 +42,7 @@
 						<td class="sqty_order"></td>
 						<td><input class="qty" type="text" /></td>
 						<td class="delete"><button class="btn_delete" id="btn_0">Delete</button></td>
+						<td class="location"></td>
 					</tr>
 				</tbody>
 			</table>

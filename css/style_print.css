@@ -1,7 +1,7 @@
 .container_01, .container_02{
 	visibility: hidden;
 }
-.empty_row, .barcode, .delete{
+.empty_row, .delete, .sqty, .sqty_order{
 	display: none;
 }
 
@@ -22,12 +22,15 @@
 	width: 110px;
 }
 .desc, .desc_order{
-	width: 300px;
+	width: 400px;
+}
+.location{
+	display: visible;
+}
+#btn_print{
+	display: none;
 }
 }
 th{
 	border: none;
-}
-tr:nth-child(even) {
-    border: none;
 }
